@@ -7,6 +7,7 @@ protobuf = "4.36.2"
 protobufProtocGenGrpc = "1.9.1"
 protobufPlugin = "0.10.0"
 reactorGrpc = "1.2.4"
+springdoc = "3.2.0"
 
 [libraries]
 spring-boot-starter-webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux" }
@@ -17,6 +18,7 @@ reactor-grpc = { group = "com.salesforce.servicelibs", name = "reactor-grpc", ve
 reactor-grpc-stub = { group = "com.salesforce.servicelibs", name = "reactor-grpc-stub", version.ref = "reactorGrpc" }
 spring-grpc-client-starter = { group = "org.springframework.grpc", name = "spring-grpc-client-spring-boot-starter", version.ref = "springGrpc" }
 spring-boot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation" }
+springdoc-webflux-ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webflux-ui", version.ref = "springdoc" }
 
 [plugins]
 lombok = { id = "io.freefair.lombok", version.ref = "lombok" }

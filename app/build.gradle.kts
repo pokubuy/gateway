@@ -20,6 +20,7 @@ dependencies {
     implementation(libs.spring.grpc.client.starter)
     implementation(libs.reactor.grpc.stub)
     implementation(libs.spring.boot.starter.validation)
+    implementation(libs.springdoc.webflux.ui)
 }
 
 java {

@@ -1,8 +1,8 @@
-spring:
-  grpc.client:
-    user-service:
-      address: "http://localhost:8081"
-
 security.oauth2.resourceserver.jwt:
   issuer-uri: http://localhost:8000/realms/pokubuy
   jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt/ussuer-uri}/protocol/openid-connect/certs
+
+clients:
+  user-service:
+    host: localhost
+    port: 8081

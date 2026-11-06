@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor
-public final class UserServiceController {
+public class UserServiceController {
 
     private final UserService userService;
 

@@ -1,1 +1,6 @@
 spring.application.name: pokubuy-gateway
+
+springdoc:
+  packages-to-scan: org.pokubuy.gateway.presentation
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
