@@ -18,6 +18,7 @@ grpc-all = { group = "io.grpc", name = "grpc-all", version.ref = "grpc" }
 reactor-core = { group = "io.projectreactor", name = "reactor-core", version.ref = "reactor" }
 spring-boot-starter-webflux = { group = "org.springframework.boot", name = "spring-boot-starter-webflux" }
 spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security" }
+spring-boot-starter-oauth2-resourceServer = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-resource-server" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 protobuf-protoc-gen-grpc = { group = "io.grpc", name = "protoc-gen-grpc-java", version.ref = "protobufProtocGenGrpc" }
 reactor-grpc = { group = "com.salesforce.servicelibs", name = "reactor-grpc", version.ref = "reactorGrpc" }

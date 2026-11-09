@@ -1,6 +1,7 @@
 package org.pokubuy.gateway.application.configuration;
 
 import lombok.RequiredArgsConstructor;
+import org.pokubuy.gateway.application.security.JwtAuthenticationConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -24,6 +25,11 @@ public class SecurityConfig {
                 .pathMatchers(HttpMethod.POST, "/users/moderators", "/users/support").hasRole("MODERATOR")
                 .pathMatchers(HttpMethod.GET, "/users").hasAnyRole("MODERATOR", "SUPPORT")
                 .anyExchange().denyAll()
+            )
+            .oauth2ResourceServer(oauth2 ->
+                oauth2.jwt(jwtSpec ->
+                    jwtSpec.jwtAuthenticationConverter(new JwtAuthenticationConverter())
+                )
             );
         return http.build();
     }

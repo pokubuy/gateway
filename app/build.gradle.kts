@@ -15,6 +15,7 @@ repositories {
 dependencies {
     implementation(libs.spring.boot.starter.webflux)
     implementation(libs.spring.boot.starter.security)
+    implementation(libs.spring.boot.starter.oauth2.resourceServer)
     implementation(libs.spring.grpc.client.starter)
     implementation(libs.reactor.grpc.stub)
     implementation(libs.spring.boot.starter.validation)

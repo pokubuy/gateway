@@ -67,7 +67,7 @@ public class UserServiceController {
             request.username(),
             request.email(),
             request.password(),
-            List.of(UserRole.MODERATION)
+            List.of(UserRole.MODERATOR)
         );
     }
 

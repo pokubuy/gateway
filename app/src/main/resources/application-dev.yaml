@@ -1,6 +1,6 @@
-security.oauth2.resourceserver.jwt:
-  issuer-uri: http://localhost:8000/realms/pokubuy
-  jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt/ussuer-uri}/protocol/openid-connect/certs
+spring.security.oauth2.resourceserver.jwt:
+  issuer-uri: http://keycloak:8080/realms/pokubuy
+  jwk-set-uri: http://localhost:8000/realms/pokubuy/protocol/openid-connect/certs
 
 clients:
   user-service:
