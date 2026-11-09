@@ -14,6 +14,8 @@ public class UserServiceGrpcClient implements UserService {
 
     private final ReactorUserServiceGrpc.ReactorUserServiceStub userService;
 
+    pu
+
     @Override
     public Mono<AuthData> authenticateUser(String email, String password) {
         return userService.authenticateUser(

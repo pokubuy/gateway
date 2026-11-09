@@ -12,3 +12,4 @@ plugins {
 
 rootProject.name = "pokubuy-gateway"
 include("app")
+include("user-service:api")

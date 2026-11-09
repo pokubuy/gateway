@@ -5,5 +5,7 @@ import reactor.core.publisher.Mono;
 
 public interface UserService {
 
+    Mono<AuthData> createUser(String)
+
     Mono<AuthData> authenticateUser(String email, String password);
 }
