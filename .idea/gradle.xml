@@ -10,8 +10,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/userservice" />
-            <option value="$PROJECT_DIR$/userservice/api" />
+            <option value="$PROJECT_DIR$/user-service" />
+            <option value="$PROJECT_DIR$/user-service/api" />
           </set>
         </option>
       </GradleProjectSettings>
