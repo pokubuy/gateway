@@ -1,4 +1,8 @@
-spring.application.name: pokubuy-gateway
+spring:
+  application.name: pokubuy-gateway
+  profiles.group:
+    int: "deployed"
+    prod: "deployed"
 
 springdoc:
   packages-to-scan: org.pokubuy.gateway.presentation

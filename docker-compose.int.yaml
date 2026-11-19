@@ -1,0 +1,106 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+      KEYCLOAK_DB: keycloak
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: keycloak
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./user-service/init-keycloak-db.sh:/docker-entrypoint-initdb.d/init-keycloak-db.sh
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U keycloak -d keycloak" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - keycloak_net
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    command: start-dev
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: root
+      KC_BOOTSTRAP_ADMIN_PASSWORD: rootroot
+
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+
+      KC_HEALTH_ENABLED: true
+    ports:
+      - "8000:8080"
+    networks:
+      - keycloak_net
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --head -fsS http://localhost:9000/health/ready | echo $?" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  user-service:
+    container_name: pokubuy-user-service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    image: pokubuy-user-service:int
+    environment:
+      KEYCLOAK_URL: http://keycloak:8080
+      KEYCLOAK_ADMIN: root
+      KEYCLOAK_ADMIN_PASSWORD: rootroot
+      KEYCLOAK_ADMIN_REALM: master
+      KEYCLOAK_ADMIN_CLIENT: admin-cli
+
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+
+      SPRING_PROFILES_ACTIVE: int
+    networks:
+      - keycloak_net
+    depends_on:
+      keycloak:
+        condition: service_healthy
+
+  gateway:
+    container_name: pokubuy-gateway
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pokubuy-gateway:int
+    environment:
+      USER_SERVICE_HOST: user-service
+      USER_SERVICE_PORT: 9090
+      OAUTH2_ISSUER_URL: http://keycloak:8080/realms/pokubuy
+      OAUTH2_CERTS_URL: http://localhost:8000/realms/pokubuy/protocol/openid-connect/certs
+      SPRING_PROFILES_ACTIVE: int
+    networks:
+      - keycloak_net
+      - application_net
+    ports:
+      - "8081:8080"
+    depends_on:
+      - user-service
+
+volumes:
+  postgres_data:
+
+networks:
+  keycloak_net:
+  application_net:

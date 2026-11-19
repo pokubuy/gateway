@@ -1,0 +1,8 @@
+spring.security.oauth2.resourceserver.jwt:
+  issuer-uri: ${OAUTH2_ISSUER_URL}
+  jwk-set-uri: ${OAUTH2_CERTS_URL}
+
+clients:
+  user-service:
+    host: ${USER_SERVICE_HOST}
+    port: ${USER_SERVICE_PORT}
