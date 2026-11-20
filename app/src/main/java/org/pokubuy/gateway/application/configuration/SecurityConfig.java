@@ -2,20 +2,45 @@ package org.pokubuy.gateway.application.configuration;
 
 import lombok.RequiredArgsConstructor;
 import org.pokubuy.gateway.application.security.JwtAuthenticationConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebFluxSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    @Value("${security.cors.allowed-origins}")
+    private List<String> allowedOrigins;
+
     @Bean
-    public SecurityWebFilterChain filterChain(ServerHttpSecurity http) {
+    public CorsConfigurationSource corsConfigurationSource() {
+        var config = new CorsConfiguration();
+        config.setAllowedOrigins(allowedOrigins);
+        config.setAllowedMethods(List.of("*"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        var source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+
+    @Bean
+    public SecurityWebFilterChain filterChain(
+        ServerHttpSecurity http,
+        CorsConfigurationSource corsConfigurationSource
+    ) {
         http
             .csrf(ServerHttpSecurity.CsrfSpec::disable)
             .authorizeExchange(exchanges -> exchanges
@@ -30,7 +55,8 @@ public class SecurityConfig {
                 oauth2.jwt(jwtSpec ->
                     jwtSpec.jwtAuthenticationConverter(new JwtAuthenticationConverter())
                 )
-            );
+            )
+            .cors(cors -> cors.configurationSource(corsConfigurationSource));
         return http.build();
     }
 }

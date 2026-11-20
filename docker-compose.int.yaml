@@ -85,6 +85,7 @@ services:
       dockerfile: Dockerfile
     image: pokubuy-gateway:int
     environment:
+      CORS_ALLOWED_ORIGINS: http://localhost:8080,http://localhost:4200
       USER_SERVICE_HOST: user-service
       USER_SERVICE_PORT: 9090
       OAUTH2_ISSUER_URL: http://keycloak:8080/realms/pokubuy
@@ -94,7 +95,7 @@ services:
       - keycloak_net
       - application_net
     ports:
-      - "8081:8080"
+      - "8080:8080"
     depends_on:
       - user-service
 
