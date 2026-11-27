@@ -27,7 +27,7 @@ public class SellerListingController {
     @PostMapping
     public Mono<ListingResponse> create(
         @AuthenticationPrincipal Jwt jwt,
-        CreateListingRequest request
+        @Valid @RequestBody CreateListingRequest request
     ) {
         return listingService.create(extractUserId(jwt), request);
     }

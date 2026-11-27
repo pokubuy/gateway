@@ -48,7 +48,7 @@ public class OrderController {
         @AuthenticationPrincipal Jwt jwt,
         @PathVariable UUID orderId
     ) {
-        return clientWebClient.pay(extractUserId(jwt), orderId);
+        return clientWebClient.confirm(extractUserId(jwt), orderId);
     }
 
     @PostMapping("/{orderId}/accept")
