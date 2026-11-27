@@ -148,7 +148,7 @@ services:
       USER_SERVICE_PORT: 9090
       BACKEND_URL: http://backend:8080
       OAUTH2_ISSUER_URL: http://keycloak:8080/realms/pokubuy
-      OAUTH2_CERTS_URL: http://localhost:8000/realms/pokubuy/protocol/openid-connect/certs
+      OAUTH2_CERTS_URL: http://keycloak:8080/realms/pokubuy/protocol/openid-connect/certs
       SPRING_PROFILES_ACTIVE: int
     networks:
       - keycloak-net
