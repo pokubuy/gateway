@@ -76,7 +76,7 @@ services:
     networks:
       - keycloak-net
     ports:
-      - "8081:8080"
+      - "8081:9090"
     depends_on:
       keycloak:
         condition: service_healthy
@@ -131,6 +131,7 @@ services:
     ports:
       - "8082:8080"
     depends_on:
+      - postgres
       - kafka
       - redis
 
@@ -144,6 +145,7 @@ services:
       CORS_ALLOWED_ORIGINS: http://localhost:8080,http://localhost:4200
       USER_SERVICE_HOST: user-service
       USER_SERVICE_PORT: 9090
+      BACKEND_URL: http://backend:8080
       OAUTH2_ISSUER_URL: http://keycloak:8080/realms/pokubuy
       OAUTH2_CERTS_URL: http://localhost:8000/realms/pokubuy/protocol/openid-connect/certs
       SPRING_PROFILES_ACTIVE: int

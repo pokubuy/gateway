@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebFluxSecurity
+@EnableReactiveMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -49,6 +51,13 @@ public class SecurityConfig {
                 .pathMatchers(HttpMethod.POST, "/users/clients", "/users/sellers").permitAll()
                 .pathMatchers(HttpMethod.POST, "/users/moderators", "/users/support").hasRole("MODERATOR")
                 .pathMatchers(HttpMethod.GET, "/users").hasAnyRole("MODERATOR", "SUPPORT")
+                .pathMatchers("/client/**").authenticated()
+                .pathMatchers("/seller/**").hasAnyRole("SELLER", "MODERATOR", "SUPPORT")
+                .pathMatchers("/orders/**").authenticated()
+                .pathMatchers("/catalog/listings/**").permitAll()
+                .pathMatchers("/sellers/*/name").permitAll()
+                .pathMatchers("/sellers/**").hasAnyRole("SELLER", "MODERATOR", "SUPPORT")
+                .pathMatchers(HttpMethod.GET, "/categories/**").permitAll()
                 .anyExchange().denyAll()
             )
             .oauth2ResourceServer(oauth2 ->

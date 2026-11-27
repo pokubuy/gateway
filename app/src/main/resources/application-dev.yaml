@@ -2,7 +2,11 @@ spring.security.oauth2.resourceserver.jwt:
   issuer-uri: http://keycloak:8080/realms/pokubuy
   jwk-set-uri: http://localhost:8000/realms/pokubuy/protocol/openid-connect/certs
 
+security.cors.allowed-origins: http://localhost:8080,http://localhost:4200
+
 clients:
   user-service:
     host: localhost
     port: 8081
+  backend:
+    url: http://localhost:8082

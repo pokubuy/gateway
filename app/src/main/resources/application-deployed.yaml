@@ -8,3 +8,5 @@ clients:
   user-service:
     host: ${USER_SERVICE_HOST}
     port: ${USER_SERVICE_PORT}
+  backend:
+    url: ${BACKEND_URL}

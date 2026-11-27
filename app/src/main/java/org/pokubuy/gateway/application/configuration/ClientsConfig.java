@@ -7,6 +7,7 @@ import org.pokubuy.gateway.application.configuration.configurationproperties.Cli
 import org.pokubuy.userservice.grpc.ReactorUserServiceGrpc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 @RequiredArgsConstructor
@@ -21,5 +22,10 @@ public class ClientsConfig {
             .usePlaintext()
             .build();
         return ReactorUserServiceGrpc.newReactorStub(channel);
+    }
+
+    @Bean
+    public WebClient webClient() {
+        return WebClient.create();
     }
 }
